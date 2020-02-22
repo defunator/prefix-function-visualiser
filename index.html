@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?autoload=true&amp;skin=default&amp;lang=py" defer=""></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+    <title>prefix-function-visualiser</title>
+  </head>
+  <body>
+    <div id="app">
+
+      <header>
+          <h1>Алгоритм поиска префикс функции строки</h1>
+        </header>
+        <div id="input-section">
+          <input id="searchtext" class="form-control" v-model="textInput" type="text" placeholder="Введите строчку" maxlength="24" list="suggestions"/>
+          <datalist id="suggestions">
+            <option value="aaaaaaaaaaaa">
+            <option value="abacabadabacaba">
+            <option value="abcdadcabcdabcdab">
+            <option value="abababababb">
+            <option value="atcacatcatca">
+            <option value="ababacabacbabababacaab">
+          </datalist>
+<!--        </div>-->
+
+<!--          <span id="searchtext_sizecontroller" style="color:#800;">{{ checkSearchTextSize() }}</span>-->
+          <div class="data-section">
+            <table border="1">
+              <tr>
+                <td class="table-char hide_all">i:</td>
+                <td v-for="i in string.length" v-bind:class=dataSectionChar(i)>{{ i - 1 }}</td>
+              </tr>
+              <tr>
+                <td class="table-char hide_all">s[]:</td>
+                <td v-for="i in string.length" v-bind:class=dataSectionChar(i)>{{ string[i - 1] }}</td>
+              </tr>
+              <tr>
+                <td class="table-char hide_all">p[]:</td>
+                <td v-for="i in string.length" v-bind:class=dataSectionChar(i)>{{ prefixValsChar(i - 1) }}</td>
+              </tr>
+            </table>
+
+          </div>
+        </div>
+        <div id="code-section">
+          <pre class="prettyprint linenums" id="code-output"><span v-for="i in codeLines.length">{{codeLines[i - 1] + ((i === codeLines.length) ? '' : '\n')}}</span></pre>
+          <button type="button" class="btn btn-primary" v-on:click="previousStep()">Назад</button>
+          <button type="button" class="btn btn-primary" v-on:click="nextStep()" >Вперед</button>
+          <button type="button" class="btn btn-primary" v-on:click="stopStartAlgorithm()">{{ isStopped ? 'Play' : 'Pause' }}</button>
+          <input type="range" id='range-slider' name="compslider" min="0" v-bind:max="dataHighlights.length - 1" v-model="slideAlgorithmStep" v-on:click="slideAlgorithm()" />
+          <p v-html="commentariesText"></p>
+        </div>
+      <div id="visual-section">
+        <table align="center">
+          <tr>
+            <td v-for="i in string.length" v-bind:class=realVisualSectionChar(i) v-bind:id=visualSectionCharId(i)>{{ visualSectionCharVal(i - 1) }}</td>
+          </tr>
+          <tr>
+            <td v-for="i in string.length" v-bind:class=visualSectionChar1(i) v-bind:id=visualSectionChar1Id(i)>{{ visualSectionChar2Val(i - 1) }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script src="./src/main.js"></script>
+    <script src="./src/algorithm.js"></script>
+
+  </body>
+</html>
