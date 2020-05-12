@@ -127,7 +127,7 @@ var app = new Vue({
       if (this.isStopped) {
         this.startedSetInterval = setInterval(function () {
           this.nextStep();
-        }.bind(this), 1000);
+        }.bind(this), 3000);
       } else {
         clearInterval(this.startedSetInterval);
       }
