@@ -162,3 +162,7 @@ td.moveee {
   animation-duration: 2s;
   animation-fill-mode: forwards;
 }
+
+#plotArea {
+  margin-top: 100px;
+}

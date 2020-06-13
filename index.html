@@ -12,6 +12,7 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>prefix-function-visualiser</title>
   </head>
   <body>
@@ -69,6 +70,11 @@
           </tr>
         </table>
       </div>
+    </div>
+    <div style="clear:both;"></div>
+    <div id="plotArea">
+        <h2>Траектория сравнения</h2>
+        <div id="comparisonsplot"></div>
     </div>
     <script src="./src/main.js"></script>
     <script src="./src/algorithm.js"></script>

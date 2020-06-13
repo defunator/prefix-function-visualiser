@@ -20,6 +20,8 @@ var app = new Vue({
       slideAlgorithmStep: 0,
       isStopped: true,
       startedSetInterval: 0,
+      pts: [],
+      didTraces: false,
       codeLines: [
         'p[0] = 0',
         'for i in range(1, len(s)):',
@@ -44,6 +46,33 @@ var app = new Vue({
     },
     algorithmStep: function() {
       let i = this.slideAlgorithmStep;
+      if (this.didTraces) {
+        Plotly.deleteTraces("comparisonsplot", -1);
+      }
+      this.didTraces = true;
+      let dx = 0;
+      let dy = 0;
+      for (let j = 0; j !== this.pts.length; ++j) {
+        if (parseInt(this.pts[j].stepNum) <= i) {
+          dx = parseInt(this.pts[j].x);
+          dy = parseInt(this.pts[j].y);
+        } else {
+          break;
+        }
+      }
+      Plotly.addTraces("comparisonsplot", [
+        {x: [dx],
+         y: [dy],
+         mode:'markers',
+         marker: {
+             symbol: "circle-open",
+             color: 'red',
+             line: {
+                 width: 4
+             },
+             size: 20
+         },
+         }]);
       while (true) {
         if (Number.isInteger(this.codeRow)) {
           document.getElementsByClassName('L' + this.codeRow)[0].style.backgroundColor = '';
@@ -111,7 +140,35 @@ var app = new Vue({
       let algorithmResult = algorithm(this.string);
       this.dataHighlights = algorithmResult.dataHighlights;
       this.prefixVals = algorithmResult.prefixVals;
-      this.algorithmStep = min(this.algorithmStep, this.dataHighlights.length - 1);
+      this.pts = algorithmResult.pts;
+      this.algorithmStep = Math.min(this.algorithmStep, this.dataHighlights.length - 1);
+
+      let xs = [];
+      let ys = [];
+      let maxx = 0;
+      let maxy = 0;
+      for (let i = 0; i !== this.pts.length; ++i) {
+        maxx = Math.max(maxx, parseInt(this.pts[i].x));
+        maxy = Math.max(maxy, parseInt(this.pts[i].y));
+        xs.push(parseInt(this.pts[i].x));
+        ys.push(parseInt(this.pts[i].y));
+      }
+      Plotly.newPlot("comparisonsplot", [{x: xs, y: ys, mode: 'lines+markers'}],
+          { xaxis: { title: "i", dtick: 1, range: [-0.2, maxx + 0.2] },
+            yaxis: { title: "p[]", dtick: 1, range: [-0.5, maxy + 0.5] },
+            showlegend: false,
+            height: 300,
+            margin: {
+                 l: 60,
+                 r: 30,
+                 b: 60,
+                 t: 10,
+                 pad: 10
+              },
+          },
+          { displayModeBar: false, staticPlot: true}
+      );
+      this.didTraces = false;
     },
     nextStep: function() {
       if (this.algorithmStep !== this.dataHighlights.length) {
