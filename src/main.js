@@ -244,7 +244,9 @@ var app = new Vue({
       }
       if (this.equalCharsCheck.length !== 0 && this.equalCharsCheck.includes(ind)) {
         if (this.string[this.equalCharsCheck[0]] === this.string[this.equalCharsCheck[1]]) {
-          style += 'match ';
+          if (this.visualSectionChar1Val(ind) === ' ') {
+            style += 'match ';
+          }
         } else if (!(this.visualSectionChar1Val(ind) !== ' ' && this.equalCharsCheck[1] === ind)) {
           style += 'mismatch ';
         }

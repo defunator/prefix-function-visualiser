@@ -63,9 +63,11 @@
       <div id="visual-section">
         <table align="center">
           <tr>
+            <td class="table-char visual hide_char">a</td>
             <td v-for="i in string.length" v-bind:class=realVisualSectionChar(i) v-bind:id=visualSectionCharId(i)>{{ visualSectionCharVal(i - 1) }}</td>
           </tr>
           <tr>
+            <td class="table-char visual hide_char">b</td>
             <td v-for="i in string.length" v-bind:class=visualSectionChar1(i) v-bind:id=visualSectionChar1Id(i)>{{ visualSectionChar2Val(i - 1) }}</td>
           </tr>
         </table>
