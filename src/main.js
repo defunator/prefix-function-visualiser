@@ -53,7 +53,7 @@ var app = new Vue({
       let dx = 0;
       let dy = 0;
       for (let j = 0; j !== this.pts.length; ++j) {
-        if (parseInt(this.pts[j].stepNum) <= i) {
+        if (parseInt(this.pts[j].stepNum) <= this.algorithmStep) {
           dx = parseInt(this.pts[j].x);
           dy = parseInt(this.pts[j].y);
         } else {
