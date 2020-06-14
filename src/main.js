@@ -173,6 +173,8 @@ var app = new Vue({
     nextStep: function() {
       if (this.algorithmStep !== this.dataHighlights.length) {
         ++this.algorithmStep;
+      } else if (!this.isStopped) {
+        this.stopStartAlgorithm();
       }
     },
     previousStep: function() {
